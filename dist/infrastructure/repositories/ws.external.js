@@ -49,7 +49,8 @@ class WsTransporter extends whatsapp_web_js_1.Client {
             console.log('Escanea el codigo QR que esta en la carepta tmp');
             console.log(qr);
             this.qr = qr;
-            this.generateImage(qr);
+            console.log("QR => ", qr);
+            //this.generateImage(qr);
         });
         this.on('message', message => {
             console.log(message.body);
