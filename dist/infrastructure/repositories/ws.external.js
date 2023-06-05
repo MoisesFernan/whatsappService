@@ -134,7 +134,7 @@ class WsTransporter extends whatsapp_web_js_1.Client {
     getQr() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const publicPath = `${process.cwd()}/src/public`;
+                const publicPath = `${process.cwd()}/dist/public`;
                 let qr_svg = (0, qr_image_1.image)(this.qr, { type: "svg", margin: 4 });
                 yield qr_svg.pipe(require("fs").createWriteStream(`${publicPath}/qr.svg`));
                 return { result: 'ok', path: `/public/qr.svg` };
@@ -160,7 +160,7 @@ class WsTransporter extends whatsapp_web_js_1.Client {
         });
     }
     destroyQr() {
-        const publicPath = `${process.cwd()}/src/public`;
+        const publicPath = `${process.cwd()}/dist/public`;
         const filePath = path_1.default.join(publicPath, 'qr.svg');
         if (require('fs').existsSync(filePath)) {
             console.log('existe el archivo');
