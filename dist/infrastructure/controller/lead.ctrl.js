@@ -34,10 +34,10 @@ class LeadCtrl {
             res.send(response);
         });
         this.sendSeveralMsgCtrl = ({ body }, res) => __awaiter(this, void 0, void 0, function* () {
-            /*const { message, phones } = body;
-            const response = await this.leadSendSeveralMsg.send({ message, phones })
-            res.send(response);*/
-            res.send("sendSeveralMsgCtrl");
+            const { message, phones } = body;
+            const response = yield this.leadSendSeveralMsg.send({ message, phones })
+            res.send(response);
+            //res.send("sendSeveralMsgCtrl");
         });
         const [leadCreatorUseCase, leadGetChatsUseCase, leadGetChat, leadGetQr, leadSendSeveralMsg] = leads;
         this.leadCreator = leadCreatorUseCase;
