@@ -46,11 +46,10 @@ class WsTransporter extends whatsapp_web_js_1.Client {
             console.log("LOGIN_FAIL");
         });
         this.on("qr", (qr) => {
-            console.log('Escanea el codigo QR que esta en la carepta tmp');
+            console.log('hora', new Date().toLocaleTimeString());
             console.log(qr);
             this.qr = qr;
-            console.log("QR => ", qr);
-            //this.generateImage(qr);
+            //this.generateImage(qr)
         });
         this.on('message', message => {
             console.log(message.body);
@@ -61,7 +60,14 @@ class WsTransporter extends whatsapp_web_js_1.Client {
         });
         this.on('disconnected', message => {
             console.log('disconnected => ', message);
+            this.status = false;
+            //call constructor again
             this.initialize();
+            this.on("qr", (qr) => {
+                console.log('hora reini', new Date().toLocaleTimeString());
+                console.log(qr);
+                this.qr = qr;
+            });
         });
     }
     /**
@@ -87,9 +93,11 @@ class WsTransporter extends whatsapp_web_js_1.Client {
         try {
             if (!this.status)
                 return Promise.resolve({ error: "WAIT_LOGIN" });
+            console.log('enviando varios mensajes');
             phones.forEach((phone) => __awaiter(this, void 0, void 0, function* () {
                 yield this.sendMessage(`${phone}@c.us`, message);
             }));
+            console.log('varios mensajes enviados');
             return Promise.resolve({ result: 'ok' });
         }
         catch (e) {
@@ -136,6 +144,8 @@ class WsTransporter extends whatsapp_web_js_1.Client {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const publicPath = `${process.cwd()}/dist/public`;
+                if (this.qr === '')
+                    return Promise.resolve({ error: "WAIT_QR" });
                 let qr_svg = (0, qr_image_1.image)(this.qr, { type: "svg", margin: 4 });
                 yield qr_svg.pipe(require("fs").createWriteStream(`${publicPath}/qr.svg`));
                 return { result: 'ok', path: `/public/qr.svg` };
@@ -164,9 +174,25 @@ class WsTransporter extends whatsapp_web_js_1.Client {
         const publicPath = `${process.cwd()}/dist/public`;
         const filePath = path_1.default.join(publicPath, 'qr.svg');
         if (require('fs').existsSync(filePath)) {
-            console.log('existe el archivo');
             require('fs').unlinkSync(filePath);
+            this.qr = '';
+            console.log('qr eliminado');
         }
+    }
+    clientLogout() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                if (!this.status)
+                    return Promise.resolve({ error: "WAIT_LOGIN" });
+                this.logout();
+                this.status = false;
+                this.initialize();
+                return { result: true };
+            }
+            catch (e) {
+                return Promise.resolve({ error: e.message });
+            }
+        });
     }
     getStatus() {
         return this.status;

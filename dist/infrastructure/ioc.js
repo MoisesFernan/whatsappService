@@ -8,10 +8,11 @@ const lead_create_1 = require("../application/lead.create");
 const lead_getchats_1 = require("../application/lead.getchats");
 const lead_getchat_1 = require("../application/lead.getchat");
 const lead_getQr_1 = require("../application/lead.getQr");
+const lead_sendSeveralMsg_1 = require("../application/lead.sendSeveralMsg");
+const lead_logout_1 = require("../application/lead.logout");
 const lead_ctrl_1 = __importDefault(require("./controller/lead.ctrl"));
 const mock_repository_1 = __importDefault(require("./repositories/mock.repository"));
 const ws_external_1 = __importDefault(require("./repositories/ws.external"));
-const lead_sendSeveralMsg_1 = require("../application/lead.sendSeveralMsg");
 const container = new node_dependency_injection_1.ContainerBuilder();
 /**
  * Inicamos servicio de WS / Bot / Twilio
@@ -35,10 +36,14 @@ container
 container
     .register("lead.senSeveralMsg", lead_sendSeveralMsg_1.LeadSendSeveralMsg)
     .addArgument(wsTransporter);
+container
+    .register("lead.logout", lead_logout_1.LeadLogout)
+    .addArgument(wsTransporter);
 const leadCreator = container.get("lead.creator");
 const leadGeterChats = container.get("lead.getchats");
 const leadGeterChat = container.get("lead.getchat");
 const leadGeterQr = container.get("lead.getQr");
 const leadSenderSeveralMsg = container.get("lead.senSeveralMsg");
-container.register("lead.ctrl", lead_ctrl_1.default).addArgument([leadCreator, leadGeterChats, leadGeterChat, leadGeterQr, leadSenderSeveralMsg]);
+const leadLogout = container.get("lead.logout");
+container.register("lead.ctrl", lead_ctrl_1.default).addArgument([leadCreator, leadGeterChats, leadGeterChat, leadGeterQr, leadSenderSeveralMsg, leadLogout]);
 exports.default = container;

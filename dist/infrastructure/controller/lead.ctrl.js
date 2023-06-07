@@ -35,17 +35,21 @@ class LeadCtrl {
         });
         this.sendSeveralMsgCtrl = ({ body }, res) => __awaiter(this, void 0, void 0, function* () {
             const { message, phones } = body;
-            console.log(body);
-            const response = yield this.leadSendSeveralMsg.send({ message, phones })
+            const response = yield this.leadSendSeveralMsg.send({ message, phones });
             res.send(response);
-            //res.send(body);
+            //res.send("sendSeveralMsgCtrl");
         });
-        const [leadCreatorUseCase, leadGetChatsUseCase, leadGetChat, leadGetQr, leadSendSeveralMsg] = leads;
+        this.logoutCtrl = ({ body }, res) => __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.leadLogout.logout();
+            res.send(response);
+        });
+        const [leadCreatorUseCase, leadGetChatsUseCase, leadGetChat, leadGetQr, leadSendSeveralMsg, leadLogout] = leads;
         this.leadCreator = leadCreatorUseCase;
         this.leadGetChats = leadGetChatsUseCase;
         this.leadGetChat = leadGetChat;
         this.leadGetQr = leadGetQr;
         this.leadSendSeveralMsg = leadSendSeveralMsg;
+        this.leadLogout = leadLogout;
     }
 }
 exports.default = LeadCtrl;
