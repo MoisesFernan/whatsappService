@@ -49,6 +49,7 @@ class WsTransporter extends whatsapp_web_js_1.Client {
             console.log('hora', new Date().toLocaleTimeString());
             console.log(qr);
             this.qr = qr;
+            this.getQr();
             //this.generateImage(qr)
         });
         this.on('message', message => {
@@ -67,6 +68,7 @@ class WsTransporter extends whatsapp_web_js_1.Client {
                 console.log('hora reini', new Date().toLocaleTimeString());
                 console.log(qr);
                 this.qr = qr;
+                this.getQr();
             });
         });
     }
@@ -148,7 +150,7 @@ class WsTransporter extends whatsapp_web_js_1.Client {
                     return Promise.resolve({ error: "WAIT_QR" });
                 let qr_svg = (0, qr_image_1.image)(this.qr, { type: "svg", margin: 4 });
                 yield qr_svg.pipe(require("fs").createWriteStream(`${publicPath}/qr.svg`));
-                return { result: 'ok', path: `/public/qr.svg` };
+                return { result: 'ok', path: `/public/qr.svg`, qr: this.qr };
             }
             catch (e) {
                 return Promise.resolve({ error: e.message });
