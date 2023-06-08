@@ -62,14 +62,16 @@ class WsTransporter extends whatsapp_web_js_1.Client {
         this.on('disconnected', message => {
             console.log('disconnected => ', message);
             this.status = false;
-            //call constructor again
-            this.initialize();
-            this.on("qr", (qr) => {
-                console.log('hora reini', new Date().toLocaleTimeString());
-                console.log(qr);
-                this.qr = qr;
-                this.getQr();
-            });
+            this.destroy();
+            setTimeout(() => {
+                this.initialize();
+            }, 3000);
+        });
+        this.on('loading_screen', message => {
+            console.log('loading_screen => ', message);
+        });
+        this.on('change_state', message => {
+            console.log('change_state => ', message);
         });
     }
     /**
@@ -172,6 +174,21 @@ class WsTransporter extends whatsapp_web_js_1.Client {
             }
         });
     }
+    senMediaFromUrl() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const phone = '51977171315';
+                if (!this.status)
+                    return Promise.resolve({ error: "WAIT_LOGIN" });
+                const media = yield whatsapp_web_js_2.MessageMedia.fromUrl('https://www.proturbiomarspa.com/files/_pdf-prueba.pdf');
+                const response = yield this.sendMessage(`${phone}@c.us`, media);
+                return { id: response.id.id };
+            }
+            catch (e) {
+                return Promise.resolve({ error: e.message });
+            }
+        });
+    }
     destroyQr() {
         const publicPath = `${process.cwd()}/dist/public`;
         const filePath = path_1.default.join(publicPath, 'qr.svg');
@@ -197,7 +214,7 @@ class WsTransporter extends whatsapp_web_js_1.Client {
         });
     }
     getStatus() {
-        return this.status;
+        return { status: this.status };
     }
 }
 exports.default = WsTransporter;

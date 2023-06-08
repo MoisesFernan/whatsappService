@@ -18,6 +18,7 @@ class LeadSendSeveralMsg {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.leadExternal.sendSeveralMsg({ message, phones });
             //return await this.leadExternal.sendMedia();
+            ///return await this.leadExternal.senMediaFromUrl();
         });
     }
 }
