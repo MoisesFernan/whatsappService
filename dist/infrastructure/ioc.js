@@ -9,8 +9,10 @@ const lead_getchats_1 = require("../application/lead.getchats");
 const lead_getchat_1 = require("../application/lead.getchat");
 const lead_getQr_1 = require("../application/lead.getQr");
 const lead_sendSeveralMsg_1 = require("../application/lead.sendSeveralMsg");
+const lead_sendSeveralMsgGroup_1 = require("../application/lead.sendSeveralMsgGroup");
 const lead_logout_1 = require("../application/lead.logout");
 const lead_status_1 = require("../application/lead.status");
+const lead_getContacts_1 = require("../application/lead.getContacts");
 const lead_ctrl_1 = __importDefault(require("./controller/lead.ctrl"));
 const mock_repository_1 = __importDefault(require("./repositories/mock.repository"));
 const ws_external_1 = __importDefault(require("./repositories/ws.external"));
@@ -43,6 +45,12 @@ container
 container
     .register("lead.status", lead_status_1.LeadStatus)
     .addArgument(wsTransporter);
+container
+    .register("lead.getContacts", lead_getContacts_1.LeadGetContacts)
+    .addArgument(wsTransporter);
+container
+    .register("lead.sendSeveralMsgGroup", lead_sendSeveralMsgGroup_1.LeadSendSeveralMsgGroup)
+    .addArgument(wsTransporter);
 const leadCreator = container.get("lead.creator");
 const leadGeterChats = container.get("lead.getchats");
 const leadGeterChat = container.get("lead.getchat");
@@ -50,5 +58,17 @@ const leadGeterQr = container.get("lead.getQr");
 const leadSenderSeveralMsg = container.get("lead.senSeveralMsg");
 const leadLogout = container.get("lead.logout");
 const leadStatus = container.get("lead.status");
-container.register("lead.ctrl", lead_ctrl_1.default).addArgument([leadCreator, leadGeterChats, leadGeterChat, leadGeterQr, leadSenderSeveralMsg, leadLogout, leadStatus]);
+const leadGetContacts = container.get("lead.getContacts");
+const leadSendSeveralMsgGroup = container.get("lead.sendSeveralMsgGroup");
+container.register("lead.ctrl", lead_ctrl_1.default).addArgument([
+    leadCreator,
+    leadGeterChats,
+    leadGeterChat,
+    leadGeterQr,
+    leadSenderSeveralMsg,
+    leadLogout,
+    leadStatus,
+    leadGetContacts,
+    leadSendSeveralMsgGroup
+]);
 exports.default = container;

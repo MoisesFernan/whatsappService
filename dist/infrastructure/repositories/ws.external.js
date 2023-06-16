@@ -108,6 +108,21 @@ class WsTransporter extends whatsapp_web_js_1.Client {
             return Promise.resolve({ error: e.message });
         }
     }
+    sendSeveralMsgGroup({ message, phones }) {
+        try {
+            if (!this.status)
+                return Promise.resolve({ error: "WAIT_LOGIN" });
+            console.log('enviando varios mensajes');
+            phones.forEach((phone) => __awaiter(this, void 0, void 0, function* () {
+                yield this.sendMessage(`${phone}@g.us`, message);
+            }));
+            console.log('varios mensajes enviados');
+            return Promise.resolve({ result: 'ok' });
+        }
+        catch (e) {
+            return Promise.resolve({ error: e.message });
+        }
+    }
     getChatss() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -115,8 +130,25 @@ class WsTransporter extends whatsapp_web_js_1.Client {
                     return Promise.resolve({ error: "WAIT_LOGIN" });
                 console.log('obteniendo chats');
                 let count = 0;
-                const response = yield this.getChats();
-                response.forEach(e => count++);
+                //const response = await this.getChats();
+                const response = yield this.getContacts();
+                response.forEach(() => count++);
+                return { result: response, count: count };
+            }
+            catch (e) {
+                return Promise.resolve({ error: e.message });
+            }
+        });
+    }
+    getContactss() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                if (!this.status)
+                    return Promise.resolve({ error: "WAIT_LOGIN" });
+                console.log('obteniendo contactos');
+                let count = 0;
+                const response = yield this.getContacts();
+                response.forEach(() => count++);
                 return { result: response, count: count };
             }
             catch (e) {

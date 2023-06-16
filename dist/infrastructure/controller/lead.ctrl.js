@@ -37,6 +37,11 @@ class LeadCtrl {
             const response = yield this.leadSendSeveralMsg.send({ message, phones });
             res.send(response);
         });
+        this.sendSeveralMsgGroupCtrl = ({ body }, res) => __awaiter(this, void 0, void 0, function* () {
+            const { message, phones } = body;
+            const response = yield this.leadSendSeveralMsgGroup.send({ message, phones });
+            res.send(response);
+        });
         this.logoutCtrl = ({ body }, res) => __awaiter(this, void 0, void 0, function* () {
             const response = yield this.leadLogout.logout();
             res.send(response);
@@ -45,7 +50,11 @@ class LeadCtrl {
             const response = this.leadStatus.getStatus();
             res.send(response);
         };
-        const [leadCreatorUseCase, leadGetChatsUseCase, leadGetChat, leadGetQr, leadSendSeveralMsg, leadLogout, leadStatus] = leads;
+        this.getContactsCtrl = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.leadGetContacts.getContacts();
+            res.send(response);
+        });
+        const [leadCreatorUseCase, leadGetChatsUseCase, leadGetChat, leadGetQr, leadSendSeveralMsg, leadLogout, leadStatus, leadGetContacts, leadSendSeveralMsgGroup] = leads;
         this.leadCreator = leadCreatorUseCase;
         this.leadGetChats = leadGetChatsUseCase;
         this.leadGetChat = leadGetChat;
@@ -53,6 +62,8 @@ class LeadCtrl {
         this.leadSendSeveralMsg = leadSendSeveralMsg;
         this.leadLogout = leadLogout;
         this.leadStatus = leadStatus;
+        this.leadGetContacts = leadGetContacts;
+        this.leadSendSeveralMsgGroup = leadSendSeveralMsgGroup;
     }
 }
 exports.default = LeadCtrl;

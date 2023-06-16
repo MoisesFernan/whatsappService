@@ -17,5 +17,7 @@ router.get("/", leadCtrl.getChatsCtrl);
 router.get("/chat", leadCtrl.getChatCtrl);
 router.get("/qr", leadCtrl.getQrCtrl);
 router.post("/send-several-msgs", leadCtrl.sendSeveralMsgCtrl);
+router.post("/send-several-msgs-group", leadCtrl.sendSeveralMsgGroupCtrl);
 router.post("/logout", leadCtrl.logoutCtrl);
 router.get("/status", leadCtrl.statusCtrl);
+router.get("/contacts", leadCtrl.getContactsCtrl);
