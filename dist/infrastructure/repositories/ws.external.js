@@ -53,8 +53,9 @@ class WsTransporter extends whatsapp_web_js_1.Client {
             //this.generateImage(qr)
         });
         this.on('message', message => {
+            console.log("te llego un mensaje");
             console.log(message.body);
-            console.log(message);
+            //console.log(message);
         });
         this.on('change_state', message => {
             console.log('change_state => ', message);
