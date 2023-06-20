@@ -165,7 +165,7 @@ class WsTransporter extends whatsapp_web_js_1.Client {
                 console.log('obteniendo chat por id');
                 const response = yield this.getChatById(`${phone}@c.us`);
                 const msges = yield response.fetchMessages({ limit: 50 });
-                let msgs = [];
+                /*let msgs = [];
                 msges.forEach(msg => {
                     let msgObj = {
                         msg: msg.body,
@@ -173,9 +173,9 @@ class WsTransporter extends whatsapp_web_js_1.Client {
                         type: msg.type,
                     };
                     msgs.push(msgObj);
-                });
-                console.log(msgs);
-                return { result: msgs };
+                });*/
+                console.log(msges);
+                return { result: msges };
                 //return { result: response };
             }
             catch (e) {
