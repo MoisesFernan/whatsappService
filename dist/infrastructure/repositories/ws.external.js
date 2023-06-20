@@ -174,6 +174,7 @@ class WsTransporter extends whatsapp_web_js_1.Client {
                     };
                     msgs.push(msgObj);
                 });
+                console.log(msgs);
                 return { result: msgs };
                 //return { result: response };
             }
