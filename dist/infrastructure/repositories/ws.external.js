@@ -163,14 +163,19 @@ class WsTransporter extends whatsapp_web_js_1.Client {
                 if (!this.status)
                     return Promise.resolve({ error: "WAIT_LOGIN" });
                 console.log('obteniendo chat por id');
-                let count = 0;
-                //const response = await this.searchMessages(' al',{chatId: `${phone}@c.us`, limit:50});
                 const response = yield this.getChatById(`${phone}@c.us`);
                 const msges = yield response.fetchMessages({ limit: 50 });
-                let aaa = [];
-                msges.forEach(m => aaa.push(m.body));
-                console.log(aaa);
-                return { result: response };
+                let msgs = [];
+                msges.forEach(msg => {
+                    let msgObj = {
+                        msg: msg.body,
+                        is_me: msg.fromMe,
+                        type: msg.type,
+                    };
+                    msgs.push(msgObj);
+                });
+                return { result: msgs };
+                //return { result: response };
             }
             catch (e) {
                 return Promise.resolve({ error: e.message });
@@ -195,7 +200,7 @@ class WsTransporter extends whatsapp_web_js_1.Client {
     sendMedia() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const phone = '56985005140';
+                const phone = '51977171315';
                 if (!this.status)
                     return Promise.resolve({ error: "WAIT_LOGIN" });
                 const media = whatsapp_web_js_2.MessageMedia.fromFilePath(`${process.cwd()}/src/public/hpi.png`);
