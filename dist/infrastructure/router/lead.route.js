@@ -14,7 +14,7 @@ exports.router = router;
 const leadCtrl = ioc_1.default.get("lead.ctrl");
 router.post("/", leadCtrl.sendCtrl);
 router.get("/", leadCtrl.getChatsCtrl);
-router.get("/chat", leadCtrl.getChatCtrl);
+router.post("/chat", leadCtrl.getChatCtrl);
 router.get("/qr", leadCtrl.getQrCtrl);
 router.post("/send-several-msgs", leadCtrl.sendSeveralMsgCtrl);
 router.post("/send-several-msgs-group", leadCtrl.sendSeveralMsgGroupCtrl);
