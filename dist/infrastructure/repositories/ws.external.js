@@ -172,10 +172,11 @@ class WsTransporter extends whatsapp_web_js_1.Client {
                         msg: msg.body,
                         is_me: msg.fromMe,
                         type: msg.type,
+                        timestamp: msg.timestamp,
                     };
                     msgs.push(msgObj);
                 });
-                console.log(msgs, count);
+                //console.log(msgs, count);
                 return { result: msgs, count: count };
             }
             catch (e) {
@@ -198,10 +199,13 @@ class WsTransporter extends whatsapp_web_js_1.Client {
                         msg: msg.body,
                         is_me: msg.fromMe,
                         type: msg.type,
+                        timestamp: msg.timestamp,
+                        author: msg.author
                     };
                     msgs.push(msgObj);
                 });
-                console.log(msgs, count);
+                //console.log(msgs, count);
+                //return { result: msgs, count: count, msges: msges };
                 return { result: msgs, count: count };
             }
             catch (e) {
