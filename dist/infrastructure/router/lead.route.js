@@ -21,3 +21,4 @@ router.post("/send-several-msgs-group", leadCtrl.sendSeveralMsgGroupCtrl);
 router.post("/logout", leadCtrl.logoutCtrl);
 router.get("/status", leadCtrl.statusCtrl);
 router.get("/contacts", leadCtrl.getContactsCtrl);
+router.post("/chat-group", leadCtrl.getChatGroupCtrl);

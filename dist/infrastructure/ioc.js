@@ -16,6 +16,7 @@ const lead_getContacts_1 = require("../application/lead.getContacts");
 const lead_ctrl_1 = __importDefault(require("./controller/lead.ctrl"));
 const mock_repository_1 = __importDefault(require("./repositories/mock.repository"));
 const ws_external_1 = __importDefault(require("./repositories/ws.external"));
+const lead_getChatGroup_1 = require("../application/lead.getChatGroup");
 const container = new node_dependency_injection_1.ContainerBuilder();
 /**
  * Inicamos servicio de WS / Bot / Twilio
@@ -51,6 +52,9 @@ container
 container
     .register("lead.sendSeveralMsgGroup", lead_sendSeveralMsgGroup_1.LeadSendSeveralMsgGroup)
     .addArgument(wsTransporter);
+container
+    .register("lead.getChatGroup", lead_getChatGroup_1.LeadGetChatGroup)
+    .addArgument(wsTransporter);
 const leadCreator = container.get("lead.creator");
 const leadGeterChats = container.get("lead.getchats");
 const leadGeterChat = container.get("lead.getchat");
@@ -60,6 +64,7 @@ const leadLogout = container.get("lead.logout");
 const leadStatus = container.get("lead.status");
 const leadGetContacts = container.get("lead.getContacts");
 const leadSendSeveralMsgGroup = container.get("lead.sendSeveralMsgGroup");
+const leadGetChatGroup = container.get("lead.getChatGroup");
 container.register("lead.ctrl", lead_ctrl_1.default).addArgument([
     leadCreator,
     leadGeterChats,
@@ -69,6 +74,7 @@ container.register("lead.ctrl", lead_ctrl_1.default).addArgument([
     leadLogout,
     leadStatus,
     leadGetContacts,
-    leadSendSeveralMsgGroup
+    leadSendSeveralMsgGroup,
+    leadGetChatGroup
 ]);
 exports.default = container;

@@ -54,7 +54,12 @@ class LeadCtrl {
             const response = yield this.leadGetContacts.getContacts();
             res.send(response);
         });
-        const [leadCreatorUseCase, leadGetChatsUseCase, leadGetChat, leadGetQr, leadSendSeveralMsg, leadLogout, leadStatus, leadGetContacts, leadSendSeveralMsgGroup] = leads;
+        this.getChatGroupCtrl = ({ body }, res) => __awaiter(this, void 0, void 0, function* () {
+            const { phone } = body;
+            const response = yield this.leadGetChatGroup.getChatGroup(phone);
+            res.send(response);
+        });
+        const [leadCreatorUseCase, leadGetChatsUseCase, leadGetChat, leadGetQr, leadSendSeveralMsg, leadLogout, leadStatus, leadGetContacts, leadSendSeveralMsgGroup, leadGetChatGroup] = leads;
         this.leadCreator = leadCreatorUseCase;
         this.leadGetChats = leadGetChatsUseCase;
         this.leadGetChat = leadGetChat;
@@ -64,6 +69,7 @@ class LeadCtrl {
         this.leadStatus = leadStatus;
         this.leadGetContacts = leadGetContacts;
         this.leadSendSeveralMsgGroup = leadSendSeveralMsgGroup;
+        this.leadGetChatGroup = leadGetChatGroup;
     }
 }
 exports.default = LeadCtrl;

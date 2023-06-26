@@ -177,7 +177,32 @@ class WsTransporter extends whatsapp_web_js_1.Client {
                 });
                 console.log(msgs, count);
                 return { result: msgs, count: count };
-                //return { result: response };
+            }
+            catch (e) {
+                return Promise.resolve({ error: e.message });
+            }
+        });
+    }
+    getChatGroup(phone) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                if (!this.status)
+                    return Promise.resolve({ error: "WAIT_LOGIN" });
+                console.log('obteniendo chat por id');
+                const response = yield this.getChatById(`${phone}@g.us`);
+                const msges = yield response.fetchMessages({ limit: 70 });
+                const count = msges.length;
+                let msgs = [];
+                msges.forEach(msg => {
+                    let msgObj = {
+                        msg: msg.body,
+                        is_me: msg.fromMe,
+                        type: msg.type,
+                    };
+                    msgs.push(msgObj);
+                });
+                console.log(msgs, count);
+                return { result: msgs, count: count };
             }
             catch (e) {
                 return Promise.resolve({ error: e.message });
